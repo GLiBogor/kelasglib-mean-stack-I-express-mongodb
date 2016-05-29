@@ -4,7 +4,8 @@ var router = express.Router();  // inisiasi router express
 var folksModel = require('./db'); // panggil model 
 
 var bodyParser = require('body-parser');   // body-parser is used to parse POST data to an object
-router.use(bodyParser.urlencoded({extended:true}));
+router.use(bodyParser.urlencoded({extended:true})); // Ini kalau data POST-nya urlencoded biasa
+router.use(bodyParser.json()); // Digunakan untuk mem-parsing data POST yang berbentuk JSON
 
 var methodOverride = require('method-override');
 router.use(methodOverride(function(req, res){   // ganti ganti req.body._method ke HTTP method.
@@ -35,6 +36,7 @@ router.route('/')
   })
 })
 .post(function(req, res){ // POST http://localhost:3000/folks
+  console.log(req.body);
   folksModel.create({ // Simpan item baru. 
     name : req.body.name,  // Nilai POST tersimpan di req.body.namafield
     age : req.body.age,
